@@ -21,7 +21,7 @@
 #include<cmath>
 #include<vector>
 using namespace std;
-//全局变量/一个种子/便于调试/闭区间
+
 
 class individual
 {

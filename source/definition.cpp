@@ -1,5 +1,5 @@
 #include "../header/definition.h"
-
+//全局变量/一个种子/便于调试/闭区间
 default_random_engine e;
 uniform_real_distribution<double> random_real(0, 1);
 uniform_int_distribution<int> random_int_decision(0, 29);

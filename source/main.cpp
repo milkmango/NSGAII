@@ -2,7 +2,7 @@
 
 int main()
 {
-	size_t size_pop = 50;
+	size_t size_pop = 30;
 	size_t dim_x = 30;
 	size_t dim_y = 2;
 	size_t max_iter = 20;
