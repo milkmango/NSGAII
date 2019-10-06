@@ -21,8 +21,6 @@
 #include<cmath>
 #include<vector>
 using namespace std;
-
-
 class individual
 {
 public:
@@ -46,9 +44,9 @@ public:
 	vector<individual>parents;//包含关系，存个体
 	vector<individual>offspring_mix;//亲代繁殖+精英机制
 	vector<vector<int>>pareto;//排序支配后的布局
-	size_t m_num_obj;
+	size_t m_num_obj;//目标维数    然而决策变量维数决定问题的维数
 	int gene;//迭代次数
-			 //成员函数
+	//成员函数
 	population(size_t size_pop, size_t size_var, size_t num_obj);//构造函数
 	~population();
 	void initialize();

@@ -1,5 +1,6 @@
 #include "../header/definition.h"
 //全局变量/一个种子/便于调试/闭区间
+//随机数要放在.cpp文件中
 default_random_engine e;
 uniform_real_distribution<double> random_real(0, 1);
 uniform_int_distribution<int> random_int_decision(0, 29);
@@ -86,6 +87,13 @@ void population::give_birth()
 			ZDT1(&offspring_mix[t + 1]);
 			t = t + 2;
 		}
+		/////////////////////////////
+		//for(size_t i=0;i<=m_pop[0].decision_value)
+
+
+
+
+
 		else//变异
 		{
 			for (i = 0; i < parents[0].decision_value.size(); i++)
@@ -134,8 +142,9 @@ void population::elitist_nondominated_sorting()
 	if (gene > 0)
 	{
 		pareto.clear();
-		pareto.shrink_to_fit();
+		pareto.shrink_to_fit();//c++11释放vector内存  swap也可以！
 	}
+
 	pareto.push_back(vector<int>());//开辟新的空间
 									//判断支配关系
 	for (individual &i : offspring_mix)
@@ -143,6 +152,8 @@ void population::elitist_nondominated_sorting()
 		i.num_domi = 0;
 		i.dominate.clear();
 	}
+
+
 	for (int i = 0; i < offspring_mix.size(); i++)
 	{
 		for (int j = i + 1; j < offspring_mix.size(); j++)
@@ -266,19 +277,61 @@ void population::select_new_parents()
 }
 
 
-void ZDT1(individual*a)
-{
+
+
+
+
+
+
+//ZDT1-3 
+class ZDT {
+public:
+	size_t x;
+	size_t y;
+	//viture 纯  虚函数=0 父类没有实现 子类一定给出实现！
+	virtual void evaluate(individual*a, size_t x) {};
+	void generate_pf(size_t x);
+};
+//生成标准
+void ZDT::generate_pf(size_t x) {
+	size_t num = 1000;
+
+	double temp;
+	for (size_t i = 0; i<num; i++)
+
+	{
+		vector<real> temp_var(m_variable_size);
+		vector<real> temp_obj(m_objective_size);
+		temp = static_cast<double>(i) / num;
+		temp_var[0] = temp;
+		for (size_t j = 1; j<m_variable_size; j++)
+			temp_var[j] = 0.;
+		//evaluate__(temp_var.data(), temp_obj);
+		//m_optima.set_variable(temp_var, i);
+		//m_optima.set_objective(temp_obj, i);
+	}
+}
+
+class ZDT1 :public ZDT {
+	//成员函数
+	//ZDT1(size_t dim_x, size_t dim_y);
+	void evaluate(individual*a,size_t x);
+};
+
+
+void ZDT1::evaluate(individual*a, size_t x) {
 	a->objective_value[0] = a->decision_value[0];
 	double g = 1, sum = 0;
 	size_t i = 0;//无符号整型
-	for (i = 0; i < a->decision_value.size() - 1; i++)
+	for (i = 1; i < x; i++)// individual i; zdt1 p( de  , ob ); p.evaluate(&i);
 	{
 		sum += a->decision_value[i];
 	}
-	sum = 9 * (sum / (a->decision_value.size() - 1));
+	sum = 9 * (sum / (x - 1));
 	g += sum;
 	a->objective_value[1] = g*(1 - sqrt(a->decision_value[0] / g));
 }
+
 
 void ZDT2(individual*a)
 {
@@ -293,3 +346,6 @@ void ZDT2(individual*a)
 	g += sum;
 	a->objective_value[1] = g*(1 - pow((a->decision_value[0] / g), 2));
 }
+
+
+//问题（给一种默认的初始化  解的编码是由问题确定的）-算法调用问题的参数初始化自己的解~
