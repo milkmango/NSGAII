@@ -111,11 +111,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="source\definition.cpp" />
-    <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="..\..\V3\NSGAII\algorithm_class.cpp" />
+    <ClCompile Include="..\..\V3\NSGAII\main.cpp" />
+    <ClCompile Include="..\..\V3\NSGAII\problem_class.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="header\definition.h" />
+    <ClInclude Include="..\..\V3\NSGAII\algorithm_class.h" />
+    <ClInclude Include="..\..\V3\NSGAII\problem_class.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
